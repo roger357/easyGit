@@ -1,0 +1,82 @@
+<div *ngIf="branchsToShow?.length">
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Ultimo Commit</th>
+      <th scope="col"> </th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let branch of branchsToShow">
+    <tr>
+      <td>{{branch.branchName}}</td>
+      <td><button (click)="loadCommit(branch.lastCommit)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#commitModalCenter">{{branch.lastCommit}}</button>
+      <td><a routerLink="/detail/{{branch.branchName}}" class="badge badge-secondary"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<div *ngIf="branchsToShow?.length">
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item page-link-fixed"><a class="page-link" (click)="paginationBackward()">Previous</a></li>
+    <li *ngFor="let page of pages; let i = index" class="page-item page-link-fixed" 
+    [class.active]=" i + 1  === pageNumber">
+      <div *ngIf="page > 0; else elseBlock">
+      <a class="page-link page-link-fixed" (click)="setPageNumber(i + 1)">
+        {{ i + 1 }}
+      </a>
+    </div>
+    <ng-template #elseBlock>
+    	<a class="page-link page-link-fixed" (click)="adjustPages()">
+        ...
+      </a>
+    </ng-template>
+    </li>
+    <li class="page-item page-link-fixed"><a class="page-link" (click)="paginationForward()">Next</a></li>
+  </ul>
+</nav>
+</div>
+
+
+<!-- Modal TODO: Pasar esto a un componente independiente -->
+<div class="modal fade" id="commitModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Commit Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="commit" class="modal-body">
+
+        <label for="exampleInputEmail1" class="bmd-label-static text-customgreen" id="roger">sha</label>
+        <p class="font-weight-normal">{{commit.sha8}}</p>
+
+        <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Date</label>
+        <p class="font-weight-normal">{{commit.commitDate}}</p>
+
+        <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Author</label>
+        <p class="font-weight-normal">{{commit.author}}</p>
+
+        <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Message</label>
+        <p class="font-weight-normal">{{commit.message}}</p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!branchsToShow?.length">
+<div class="progress">
+  <div class="indeterminate"></div>
+</div>
+</div>

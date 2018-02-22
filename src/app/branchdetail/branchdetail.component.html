@@ -1,0 +1,57 @@
+
+<table class="table table-sm table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Message</th>
+      <th scope="col">Author</th>
+      <th scope="col">Date</th>
+      <th scope="col">sha</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let commit of commits; let i = index">
+    <tr data-toggle="modal" data-target="#commitModalCenter">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{commit.message}}</td>
+      <td>{{commit.author}}</td>
+      <td>{{commit.commitDate}}</td>
+      <td>{{commit.sha8}}</td>
+    </tr>
+        <!-- Modal TODO: Pasar esto a un componente independiente -->
+        <div class="modal fade" id="commitModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Commit Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <label for="exampleInputEmail1" class="bmd-label-static">sha</label>
+                <p class="font-weight-normal">{{commit.sha8}}</p>
+
+                <label for="exampleInputEmail1" class="bmd-label-static">Commit Date</label>
+                <p class="font-weight-normal">{{commit.commitDate}}</p>
+
+                <label for="exampleInputEmail1" class="bmd-label-static">Author</label>
+                <p class="font-weight-normal">{{commit.author}}</p>
+
+                <label for="exampleInputEmail1" class="bmd-label-static">Commit Message</label>
+                <p class="font-weight-normal">{{commit.message}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </tbody>
+</table>
+
+<div *ngIf="!commits?.length">
+<div class="progress">
+  <div class="indeterminate"></div>
+</div>
+</div>

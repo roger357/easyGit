@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GitWebAPI</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+<script src="assets/js/jquery-3.2.1.slim.min.js" ></script>
+<script src="assets/js/popper.js"></script>
+<script src="assets/js/tether.js"></script>
+<script src="assets/js/bootstrap-material-design.js" ></script>
+<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+<script>
+    $(function () {
+  $('[data-toggle="popover"]').popover()
+
+
+})
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip({container:'body'})
+})
+
+    $(document).ready(function () {
+    $("button").tooltip({container:'body'});
+});
+    </script>
+</html>
