@@ -10,7 +10,7 @@ import { BranchsComponent } from './branchs/branchs.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { HomenavbarComponent } from './homenavbar/homenavbar.component';
 import { CommitComponent } from './commit/commit.component';
-import { BranchdetailComponent } from './branchdetail/branchdetail.component';
+import { BranchsCommitsComponent } from './branchscommits/branchscommits.component';
 import { ShowloadingService } from './showloading.service';
 import { NumberRounderUpPipe } from './numberRounderUp.pipe';
 import { BranchspagerComponent } from './branchspager/branchspager.component';
@@ -24,7 +24,7 @@ import { CommitpagerComponent } from './commitpager/commitpager.component';
     BranchsComponent,
     HomenavbarComponent,
     CommitComponent,
-    BranchdetailComponent,
+    BranchsCommitsComponent,
     NumberRounderUpPipe,
     BranchspagerComponent,
     CommitpagerComponent

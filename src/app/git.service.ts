@@ -21,7 +21,7 @@ export class GitService {
   }
 
   getBranchCommits(name: string): Observable<Commit[]> {
-  	const url = `${this.BASE_URL}${name}/30/`
+  	const url = `${this.BASE_URL}branch/commits?branchName=${name}&commits=30`
     return this.http.get<Commit[]>(url);
   }
 

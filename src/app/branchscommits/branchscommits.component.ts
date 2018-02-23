@@ -6,11 +6,11 @@ import { GitService } from '../git.service'
 import { Commit } from '../entities/commit'
 
 @Component({
-  selector: 'app-branchdetail',
-  templateUrl: './branchdetail.component.html',
-  styleUrls: ['./branchdetail.component.css']
+  selector: 'app-branchscommits',
+  templateUrl: './branchscommits.component.html',
+  styleUrls: ['./branchscommits.component.css']
 })
-export class BranchdetailComponent implements OnInit {
+export class BranchsCommitsComponent implements OnInit {
 
 	commits: Commit[] = [];
 
