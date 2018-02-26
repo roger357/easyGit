@@ -20,11 +20,6 @@ export class GitService {
     return this.http.get<Branch[]>(this.BASE_URL + 'allbranchs/');
   }
 
-  getBranchCommits(name: string): Observable<Commit[]> {
-  	const url = `${this.BASE_URL}branch/commits?branchName=${name}&commits=30`
-    return this.http.get<Commit[]>(url);
-  }
-
   getBranchCount(): Observable<any> {
     return this.http.get<any>(this.BASE_URL + 'branchcount/');
   }
@@ -37,6 +32,21 @@ export class GitService {
   getCommit(sha: string): Observable<Commit> {
     const url = `${this.BASE_URL}commitdetail?sha=${sha}`
     return this.http.get<Commit>(url);
+  }
+
+  getCommitsCount(branchName: string): Observable<any> {
+    const url = `${this.BASE_URL}commitscount?branch=${branchName}`
+    return this.http.get<any>(url);
+  }
+
+  getBranchCommits(name: string, commits: number = 30): Observable<Commit[]> {
+    const url = `${this.BASE_URL}branch/commits?branchName=${name}&commits=${commits}`
+    return this.http.get<Commit[]>(url);
+  }
+
+  getCommitsPage(branchName: string, page: number, itemPerPage: number, maxPagesView: number): Observable<Commit[]> {
+    const url = `${this.BASE_URL}branch/commitsperpage?branchName=${branchName}&page=${page}&itemPerPage=${itemPerPage}&maxPagesView=${maxPagesView}`
+    return this.http.get<Commit[]>(url);
   }
 
 }

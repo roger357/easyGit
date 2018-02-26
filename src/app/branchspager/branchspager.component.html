@@ -24,7 +24,7 @@
     <li class="page-item page-link-fixed"><a class="page-link" (click)="paginationBackward()">Previous</a></li>
     <li *ngFor="let page of pages; let i = index" class="page-item page-link-fixed" 
     [class.active]=" i + 1  === pageNumber">
-      <div *ngIf="page > 0; else elseBlock">
+    <div *ngIf="page > 0; else elseBlock">
       <a class="page-link page-link-fixed" (click)="setPageNumber(i + 1)">
         {{ i + 1 }}
       </a>

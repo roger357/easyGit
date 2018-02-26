@@ -26,6 +26,7 @@ export class BranchspagerComponent implements OnInit {
   	this.pageNumber = 1;
   	this.itemPerPage = 5;
   	this.maxPagesView = 19;
+   // this.maxPagesView = 10;
    }
 
   ngOnInit() {
