@@ -26,6 +26,7 @@ export class BranchsCommitsComponent implements OnInit {
   pages: number[] = [];
   commits: Commit[] = [];
   commitsToShow: Commit[] = [];
+  commit: Commit;
 
   constructor(
     private route: ActivatedRoute,
@@ -143,6 +144,10 @@ export class BranchsCommitsComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  loadCommit(commit: Commit): void {
+    this.commit = commit;
   }
 
 }

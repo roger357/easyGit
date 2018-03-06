@@ -113,14 +113,14 @@ export class BranchspagerComponent implements OnInit {
 
   getCommit(sha: string): void {
     console.log('Get Commit');
-    this.gitService.getCommit(sha)
+    this.gitService.getCommit(sha, 1)
       .subscribe(commit => this.commit = commit,
         (err) => console.error(err),
         () => console.log("observable complete"));
       console.log('this.commit.sha');
   }
 
-    loadCommit(sha: string): void {
+  loadCommit(sha: string): void {
     this.getCommit(sha);
   }
 }

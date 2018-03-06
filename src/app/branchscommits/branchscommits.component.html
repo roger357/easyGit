@@ -11,42 +11,12 @@
       </tr>
     </thead>
     <tbody *ngFor="let commit of commitsToShow; let i = index">
-      <tr data-toggle="modal" data-target="#commitModalCenter">
-        <td>{{commit.message | slice:0:90 }}...</td>
+      <tr data-toggle="modal" data-target="#commitModalCenter" class="table-light" (click)="loadCommit(commit)">
+        <td>{{commit.message | slice:0:80 }}...</td>
         <td>{{commit.author}}</td>
         <td>{{commit.commitDate}}</td>
         <td>{{commit.sha8}}</td>
       </tr>
-          <!-- Modal TODO: Pasar esto a un componente independiente -->
-          <div class="modal fade" id="commitModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Commit Details</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <label for="exampleInputEmail1" class="bmd-label-static">sha</label>
-                  <p class="font-weight-normal">{{commit.sha8}}</p>
-
-                  <label for="exampleInputEmail1" class="bmd-label-static">Commit Date</label>
-                  <p class="font-weight-normal">{{commit.commitDate}}</p>
-
-                  <label for="exampleInputEmail1" class="bmd-label-static">Author</label>
-                  <p class="font-weight-normal">{{commit.author}}</p>
-
-                  <label for="exampleInputEmail1" class="bmd-label-static">Commit Message</label>
-                  <p class="font-weight-normal">{{commit.message}}</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
     </tbody>
   </table>
 </div>
@@ -81,6 +51,41 @@
   </ul>
 </nav>
 </div>
+
+
+<!-- Modal TODO: Pasar esto a un componente independiente -->
+<div class="modal fade" id="commitModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div *ngIf="commit" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Commit Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="exampleInputEmail1" class="bmd-label-static">sha</label>
+        <p class="font-weight-normal">{{commit.sha8}}</p>
+        <label for="exampleInputEmail1" class="bmd-label-static">Commit Date</label>
+        <p class="font-weight-normal">{{commit.commitDate}}</p>
+        <label for="exampleInputEmail1" class="bmd-label-static">Author</label>
+        <p class="font-weight-normal">{{commit.author}}</p>
+        <label for="exampleInputEmail1" class="bmd-label-static">Commit Message</label>
+        <p class="font-weight-normal" [innerHTML]="commit.message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a routerLink="/commit/{{commit.sha}}" data-dismiss="modal">
+          <button type="button" class="btn btn-primary">Show More </button>
+        </a>
+        <a routerLink="/commit/{{commit.sha}}" target="_blank">
+          <i class="fa fa-external-link" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <div *ngIf="!commitsToShow?.length">

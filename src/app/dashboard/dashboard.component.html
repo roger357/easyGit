@@ -22,18 +22,15 @@
     </tr>
   </thead>
   <tbody *ngFor="let branch of branchs; let i = index">
-    <tr>
+    <tr class="table-light">
       <th scope="row">{{ i + 1 }}</th>
       <td>{{branch.branchName}}</td>
-      <td><button (click)="loadCommit(branch.lastCommit)" type="button" class="btn btn-primary" 
-        data-toggle="modal" data-target="#commitModalCenter">{{branch.lastCommit}}</button>
-        
-      <td><a routerLink="/detail/{{branch.branchName}}" class="badge badge-secondary"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+      <td>
+        <button (click)="loadCommit(branch.lastCommit)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#commitModalCenter">{{branch.lastCommit}}</button>
+        <td><a routerLink="/detail/{{branch.branchName}}" class="badge badge-secondary"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
     </tr>
   </tbody>
 </table>
-
-
 
 <!-- Modal TODO: Pasar esto a un componente independiente -->
 <div class="modal fade" id="commitModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -45,28 +42,31 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div *ngIf="commit">
+      <div *ngIf="commit">
+        <div class="modal-body">
           <label for="exampleInputEmail1" class="bmd-label-static text-customgreen" id="roger">sha</label>
           <p class="font-weight-normal">{{commit.sha8}}</p>
-
           <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Date</label>
           <p class="font-weight-normal">{{commit.commitDate}}</p>
-
           <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Author</label>
           <p class="font-weight-normal">{{commit.author}}</p>
-
           <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Message</label>
-          <p class="font-weight-normal">{{commit.message}}</p>
-        </div>  
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          <p class="font-weight-normal" [innerHTML]="commit.message"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <a routerLink="/commit/{{commit.sha}}" data-dismiss="modal">
+            <button type="button" class="btn btn-primary">Show More</button>
+          </a>
+          <a routerLink="/commit/{{commit.sha}}" target="_blank">
+            <i class="fa fa-external-link" aria-hidden="true"></i>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 
 <div *ngIf="!branchs?.length">

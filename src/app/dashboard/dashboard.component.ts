@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
   getCommit(sha: string): void {
     console.log('Get Commit');
-    this.gitService.getCommit(sha)
+    this.gitService.getCommit(sha, 0)
       .subscribe(commit => this.commit = commit,
         (err) => console.error(err),
         () => console.log("observable complete"));

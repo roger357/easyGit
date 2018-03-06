@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody *ngFor="let branch of branchsToShow">
-    <tr>
+    <tr class="table-light">
       <td>{{branch.branchName}}</td>
       <td><button (click)="loadCommit(branch.lastCommit)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#commitModalCenter">{{branch.lastCommit}}</button>
       <td><a routerLink="/detail/{{branch.branchName}}" class="badge badge-secondary"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
@@ -63,12 +63,15 @@
         <p class="font-weight-normal">{{commit.author}}</p>
 
         <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Message</label>
-        <p class="font-weight-normal">{{commit.message}}</p>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <p class="font-weight-normal" [innerHTML]="commit.message"></p>
+      
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <a routerLink="/commit/{{commit.sha}}" data-dismiss="modal"><button type="button" class="btn btn-primary">Show More</button></a>
+          <a routerLink="/commit/{{commit.sha}}" target="_blank">
+            <i class="fa fa-external-link" aria-hidden="true"></i>
+          </a>
+        </div>
       </div>
     </div>
   </div>

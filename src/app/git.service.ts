@@ -29,8 +29,8 @@ export class GitService {
     return this.http.get<Branch[]>(url);
   }
 
-  getCommit(sha: string): Observable<Commit> {
-    const url = `${this.BASE_URL}commitdetail?sha=${sha}`
+  getCommit(sha: string, shortMessage: number): Observable<Commit> {
+    const url = `${this.BASE_URL}commitdetail?sha=${sha}&shortMessage=${shortMessage}`
     return this.http.get<Commit>(url);
   }
 
