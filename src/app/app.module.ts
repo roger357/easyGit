@@ -14,7 +14,6 @@ import { BranchsCommitsComponent } from './branchscommits/branchscommits.compone
 import { ShowloadingService } from './showloading.service';
 import { NumberRounderUpPipe } from './numberRounderUp.pipe';
 import { BranchspagerComponent } from './branchspager/branchspager.component';
-import { CommitpagerComponent } from './commitpager/commitpager.component';
 
 
 @NgModule({
@@ -26,8 +25,7 @@ import { CommitpagerComponent } from './commitpager/commitpager.component';
     CommitComponent,
     BranchsCommitsComponent,
     NumberRounderUpPipe,
-    BranchspagerComponent,
-    CommitpagerComponent
+    BranchspagerComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
 import {Branch} from './entities/branch';
-import { Commit } from './entities/commit'
+import { Commit } from './entities/commit';
+import { CommittedFile } from './entities/committedfile';
 
 @Injectable()
 export class GitService {
@@ -47,6 +48,11 @@ export class GitService {
   getCommitsPage(branchName: string, page: number, itemPerPage: number, maxPagesView: number): Observable<Commit[]> {
     const url = `${this.BASE_URL}branch/commitsperpage?branchName=${branchName}&page=${page}&itemPerPage=${itemPerPage}&maxPagesView=${maxPagesView}`
     return this.http.get<Commit[]>(url);
+  }
+
+  getCommitedFileDiffs(commitSHA: string): Observable<CommittedFile[]> {
+    const url = `${this.BASE_URL}commitdetail/files/diffs?sha=${commitSHA}`
+    return this.http.get<CommittedFile[]>(url);
   }
 
 }

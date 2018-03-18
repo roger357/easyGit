@@ -1,344 +1,107 @@
-<!-- Original -->
-<div *ngIf="commit" class="card">
-  <div class="card-body">
-    <div class="container">
-
-      <div class="row">
-        <div class="col-2">
-          <label for="commitAuthor" class="bmd-label-static text-customgreen">Author</label>
-          <p class="font-weight-normal" id="commitAuthor">{{commit.author}}</p>
-          <img src="https://www.gravatar.com/avatar/ec9b65e083741ca7d7dcc73f0f744678" />
-        </div>
-        <div class="col">
-        <label for="commitSHA" class="bmd-label-static text-customgreen">sha</label>
-        <p class="font-weight-normal" id="commitSHA">{{commit.sha}}</p>
-        <br>
-        <label for="commitDate" class="bmd-label-static text-customgreen">Commit Date</label>
-        <p class="font-weight-normal" id="commitDate">{{commit.commitDate}}</p>
-        </div>
-        <div class="col-6">
-        <label for="commitMessage" class="bmd-label-static text-customgreen">Commit Message</label>
-        <p class="font-weight-normal" id="commitMessage" [innerHTML]="commit.message"></p>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-4">
-            <label for="modifiedFiles" class="bmd-label-static text-customgreen">Modified Files</label>
-            <div class="table-responsive" id="modifiedFiles">
-              <table class="table table-sm" style="white-space: nowrap;">
-                <thead>
-                  <tr>
-                    <th scope="col">File Path</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><!-- Edicion de archivo -->
-                    <a href="#" class="badge badge-primary" data-toggle="popover" title="Popover title" 
-                    data-content="And here's some amazing content. It's very engaging. Right?">
-                Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\PolicySessionWrapper.java</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><!-- nuevo archivo -->
-                        <a class="badge badge-success" data-toggle="popover" title="Popover title" 
-                    data-content="And here's some amazing content. It's very engaging. Right?">
-                Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\OperationPK.java</a>
-                    </td>
-                  </tr>
-                    <tr>
-                    <td><!-- archivo borrado -->
-                        <a class="badge badge-danger" data-toggle="popover" title="Popover title" 
-                    data-content="And here's some amazing content. It's very engaging. Right?">
-                Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\UserBean.java</a>
-                    </td>
-                  </tr>
-                    <tr>
-                    <td><!-- archivo renombrado -->
-                        <a class="badge badge-primary" data-toggle="popover" title="Popover title" 
-                    data-content="And here's some amazing content. It's very engaging. Right?">
-                Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\PolicySession.java</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-        </div>
-
-        <div class="col-8">
-        <label for="commitDiff" class="bmd-label-static text-customgreen">Commit Diff</label>
-            <div class="table-responsive" id="commitDiff">
-                <table class="table table-sm table-bordered" style="white-space: nowrap;">
-                  <thead>
-                    <tr>
-                      <th scope="col">#+</th>
-                      <th scope="col">#-</th>
-                      <th scope="col">Last</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>@@ -1,10 +1,6 @@</th>
-                    </tr>
-                    <tr class="table-secondary">
-                      <th scope="row">1</th>
-                      <th scope="row">1</th>
-                      <td>package com.consisint.acsele.batchprocessing.api.file.error;-----------------------------------------------</td>
-                    </tr>
-                    <tr class="table-danger">
-                      <th scope="row"></th>
-                      <th scope="row">2</th>
-                      <td>import com.consisint.acsele.util.AcseleConf;</td>
-                    </tr>
-                    <tr class="table-success">
-                      <th scope="row">2</th>
-                      <th scope="row"></th>
-                      <td>import com.consisint.acsele.util.*;---------------------------------------------------------------------------------------------------------------------------------------------</td>
-                    </tr>
-                    <tr class="table-secondary">
-                      <th scope="row">3</th>
-                      <th scope="row">3</th>
-                      <td>import com.consisint.acsele.util.logging.AcseleLogger;</td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Opcion 2 -->
+<!-- Opcion 2.1 -->
 <div *ngIf="commit" class="card">
   <div class="card-body">
     <div class="container">
 
         <div class="row">
-
             <!-- Commits iformation and Modified Files-->
-            <div class="col-6">
+            <div class="col-5">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-9">
 
-                            <!-- Commit SHA -->
-                            <label for="commitDetails" class="bmd-label-static text-customgreen">Commit Details</label>
-                            <p class="font-weight-normal" id="commitDetails">
-                            <b>Commit:</b> {{commit.sha}} <b>[</b>{{commit.sha8}}<b>]</b><br>
-                            <b>Author:</b> {{commit.author}}<br>
-                            <b>Date:</b> {{commit.commitDate}}<br>
-                            <b>Commiter:</b>TODO<br>
-                            </p>
+                  <!-- Commit Details -->
+                  <label for="commitDetails" class="bmd-label-static text-customgreen">Commit Details</label>          
 
-                        </div>
-                        <div class="col-3">
-
-                            <img src="https://www.gravatar.com/avatar/ec9b65e083741ca7d7dcc73f0f744678"/>
-
-                        </div>
+                  <div class="row" id="commitDetails">
+                    <div class="col-2">
+                      <img src="https://www.gravatar.com/avatar/ec9b65e083741ca7d7dcc73f0f744678?s=68"/>
                     </div>
+
+                    <div class="col-10">
+                      <p class="font-weight-normal">
+                        <b>Commit:</b> {{commit.sha}} <b>[</b>{{commit.sha8}}<b>]</b><br>
+                        <b>Date:</b> {{commit.commitDate}}<br>
+                      </p>
+                    </div>
+                  </div>
+
                     <div class="row">
                         <div class="col">
-
-                        <!-- Commit Message-->
-                        <p class="font-weight-normal" id="commitMessage" [innerHTML]="commit.message"></p>
-
-                        <!-- Commited Files -->
-                        <label for="modifiedFiles" class="bmd-label-static text-customgreen">Modified Files</label>
-                        <div class="table-responsive" id="modifiedFiles">
-                          <table class="table table-sm" style="white-space: nowrap;">
-                            <thead>
-                              <tr>
-                                <th scope="col">File Path</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td><!-- Edicion de archivo -->
-                                <a href="#" class="badge badge-primary" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\PolicySessionWrapper.java</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td><!-- nuevo archivo -->
-                                    <a class="badge badge-success" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\OperationPK.java</a>
-                                </td>
-                              </tr>
-                                <tr>
-                                <td><!-- archivo borrado -->
-                                    <a class="badge badge-danger" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\UserBean.java</a>
-                                </td>
-                              </tr>
-                                <tr>
-                                <td><!-- archivo renombrado -->
-                                    <a class="badge badge-primary" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\PolicySession.java</a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Diff Changes -->
-            <div class="col-6">
-
-                <label for="commitDiff" class="bmd-label-static text-customgreen">Commit Diff</label>
-                <br>
-                <div class="table-responsive" id="commitDiff">
-                    <table class="table table-sm table-bordered" style="white-space: nowrap;">
-                      <thead>
-                        <tr>
-                          <th scope="col">#+</th>
-                          <th scope="col">#-</th>
-                          <th scope="col">Last</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th>@@ -1,10 +1,6 @@</th>
-                        </tr>
-                        <tr class="table-secondary">
-                          <th scope="row">1</th>
-                          <th scope="row">1</th>
-                          <td>package com.consisint.acsele.batchprocessing.api.file.error;-----------------------------------------------</td>
-                        </tr>
-                        <tr class="table-danger">
-                          <th scope="row"></th>
-                          <th scope="row">2</th>
-                          <td>import com.consisint.acsele.util.AcseleConf;</td>
-                        </tr>
-                        <tr class="table-success">
-                          <th scope="row">2</th>
-                          <th scope="row"></th>
-                          <td>import com.consisint.acsele.util.*;---------------------------------------------------------------------------------------------------------------------------------------------</td>
-                        </tr>
-                        <tr class="table-secondary">
-                          <th scope="row">3</th>
-                          <th scope="row">3</th>
-                          <td>import com.consisint.acsele.util.logging.AcseleLogger;</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Opcion 3 -->
-<div *ngIf="commit" class="card">
-  <div class="card-body">
-    <div class="container">
-
-        <div class="row">
-
-            <!-- Commits iformation and Modified Files-->
-            <div class="col-6">
-                    <div class="row">
-                        <div class="col-9">
-
-                            <!-- Commit SHA -->
-                            <label for="commitDetails" class="bmd-label-static text-customgreen">Commit Details</label>
-                            <p class="font-weight-normal" id="commitDetails">
-                            <b>Commit:</b> {{commit.sha}} <b>[</b>{{commit.sha8}}<b>]</b><br>
+                          <p class="font-weight-normal" >
                             <b>Author:</b> {{commit.author}}<br>
-                            <b>Date:</b> {{commit.commitDate}}<br>
                             <b>Commiter:</b>TODO<br>
-                            </p>
-
-                        </div>
-                        <div class="col-3">
-
-                            <img src="https://www.gravatar.com/avatar/ec9b65e083741ca7d7dcc73f0f744678"/>
-
+                          </p>
                         </div>
                     </div>
+
+                    <div class="row">
+
+                        <div class="col">
+                          <!-- Commit Message-->
+                          <label for="commitMessage" class="bmd-label-static text-customgreen">Commit Message</label>
+                          <p class="font-weight-normal" id="commitMessage" [innerHTML]="commit.message"></p>
+
+                          <!-- Commited Files -->
+                          <label for="modifiedFiles" class="bmd-label-static text-customgreen">Modified Files</label>
+                          <div class="table-responsive" id="modifiedFiles">
+                            <table class="table table-sm" style="white-space: nowrap;">
+                              <thead>
+                                <tr>
+                                  <th scope="col">File Path</th>
+                                </tr>
+                              </thead>
+                              <div *ngIf="committedFiles?.length">
+                              <tbody *ngFor="let committedFile of committedFiles">
+                                <tr *ngIf="committedFile.modificationType == 'M'; else addedBlock">
+                                  <td><!-- Edicion de archivo -->
+                                    <a class="badge badge-primary" data-toggle="popover" title="Popover title" 
+                                    data-content="And here's some amazing content. It's very engaging. Right?">
+                                    {{committedFile.filePath}}</a>
+                                  </td>
+                                </tr>
+                                <ng-template #addedBlock>
+                                  <tr *ngIf="committedFile.modificationType == 'A'; else erasedBlock">
+                                    <td><!-- nuevo archivo -->
+                                      <a class="badge badge-success" data-toggle="popover" title="Popover title" 
+                                      data-content="And here's some amazing content. It's very engaging. Right?">
+                                      {{committedFile.filePath}}</a>
+                                    </td>
+                                  </tr>
+                                </ng-template>
+                                <ng-template #erasedBlock>
+                                  <tr *ngIf="committedFile.modificationType == 'D'; else reanamedBlock">
+                                    <td><!-- archivo borrado -->
+                                      <a class="badge badge-danger" data-toggle="popover" title="Popover title" 
+                                      data-content="And here's some amazing content. It's very engaging. Right?">
+                                      {{committedFile.filePath}}</a>
+                                    </td>
+                                  </tr>
+                                </ng-template>
+                                <ng-template #reanamedBlock>
+                                  <tr>
+                                    <td><!-- archivo renombrado -->
+                                      <a class="badge badge-primary" data-toggle="popover" title="Popover title" 
+                                      data-content="And here's some amazing content. It's very engaging. Right?">
+                                      {{committedFile.filePath}}</a>
+                                    </td>
+                                  </tr>
+                              </ng-template>
+                              </tbody>
+                              </div>
+                            </table>
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <!-- Diff Changes -->
-            <div class="col-6">
-                    
-                <!-- Commit Message-->
-                <label for="commitMessage" class="bmd-label-static text-customgreen">Commit Message</label>
-                <p class="font-weight-normal" id="commitMessage" [innerHTML]="commit.message"></p>
+            <div class="col-7">
 
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-6">
-                
-                <!-- Commited Files -->
-                        <label for="modifiedFiles" class="bmd-label-static text-customgreen">Modified Files</label>
-                        <div class="table-responsive" id="modifiedFiles">
-                          <table class="table table-sm" style="white-space: nowrap;">
-                            <thead>
-                              <tr>
-                                <th scope="col">File Path</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td><!-- Edicion de archivo -->
-                                <a href="#" class="badge badge-primary" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\PolicySessionWrapper.java</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td><!-- nuevo archivo -->
-                                    <a class="badge badge-success" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\OperationPK.java</a>
-                                </td>
-                              </tr>
-                                <tr>
-                                <td><!-- archivo borrado -->
-                                    <a class="badge badge-danger" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\UserBean.java</a>
-                                </td>
-                              </tr>
-                                <tr>
-                                <td><!-- archivo renombrado -->
-                                    <a class="badge badge-primary" data-toggle="popover" title="Popover title" 
-                                data-content="And here's some amazing content. It's very engaging. Right?">
-                            Application\Core\EJBAcsel-e\src\com\consisint\acsele\policy\session\PolicySession.java</a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-
-            </div>
-            <div class="col-6">
-                
+                <!-- Commit Diff -->
                 <label for="commitDiff" class="bmd-label-static text-customgreen">Commit Diff</label>
                 <br>
-                <div class="table-responsive" id="commitDiff">
+                <div *ngIf="selectedDiffs?.length" class="table-responsive" id="commitDiff">
                     <table class="table table-sm table-bordered" style="white-space: nowrap;">
                       <thead>
                         <tr>
@@ -347,37 +110,37 @@
                           <th scope="col">Last</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody *ngFor="let diff of selectedDiffs">
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>@@ -1,10 +1,6 @@</th>
+                            <!-- <th>@@ -1,10 +1,6 @@</th> -->
+                            <td>{{diff.diffRange}}</td>
                         </tr>
-                        <tr class="table-secondary">
-                          <th scope="row">1</th>
-                          <th scope="row">1</th>
-                          <td>package com.consisint.acsele.batchprocessing.api.file.error;-----------------------------------------------</td>
-                        </tr>
-                        <tr class="table-danger">
-                          <th scope="row"></th>
-                          <th scope="row">2</th>
-                          <td>import com.consisint.acsele.util.AcseleConf;</td>
-                        </tr>
-                        <tr class="table-success">
-                          <th scope="row">2</th>
-                          <th scope="row"></th>
-                          <td>import com.consisint.acsele.util.*;---------------------------------------------------------------------------------------------------------------------------------------------</td>
-                        </tr>
-                        <tr class="table-secondary">
-                          <th scope="row">3</th>
-                          <th scope="row">3</th>
-                          <td>import com.consisint.acsele.util.logging.AcseleLogger;</td>
-                        </tr>
+                          <tr *ngFor="let line of diff.lines" class="table-secondary"
+                          [class.table-secondary]=" line.modificationType  === 0"
+                          [class.table-success]=" line.modificationType  === 1"
+                          [class.table-danger]=" line.modificationType  === 2">
+                            <!-- Si es linea eliminada -->
+                            <th *ngIf="line.modificationType  === 0 || line.modificationType  === 2; 
+                            else elseBlock" scope="row">{{line.lineNumber}}</th>
+                            <ng-template #elseBlock> 
+                              <th scope="row"></th>
+                            </ng-template>
+
+                            <th *ngIf="line.modificationType  === 0 || line.modificationType  === 1; 
+                            else elseBlock" scope="row">{{line.lineNumber}}</th>
+                            <ng-template #elseBlock> 
+                              <th scope="row"></th>
+                            </ng-template>
+
+                            <td>{{line.lineContent}}</td>
+                          </tr>
                       </tbody>
                     </table>
                 </div>
-
             </div>
+
         </div>
 
     </div>
