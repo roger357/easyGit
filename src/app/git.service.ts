@@ -46,7 +46,8 @@ export class GitService {
   }
 
   getCommitsPage(branchName: string, page: number, itemPerPage: number, maxPagesView: number): Observable<Commit[]> {
-    const url = `${this.BASE_URL}branch/commitsperpage?branchName=${branchName}&page=${page}&itemPerPage=${itemPerPage}&maxPagesView=${maxPagesView}`
+    const url = `${this.BASE_URL}branch/commitsperpage?branchName=${branchName}&page=${page}&
+    itemPerPage=${itemPerPage}&maxPagesView=${maxPagesView}`
     return this.http.get<Commit[]>(url);
   }
 
