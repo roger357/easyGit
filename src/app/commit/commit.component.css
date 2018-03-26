@@ -2,14 +2,3 @@
 	cursor: pointer;
 }
 
-.table{
-  white-space: nowrap;
-}
-
-.diffbox
-{
-  display:block;
-  width:100%;
-  height:500px;
-  overflow:scroll;
-}
