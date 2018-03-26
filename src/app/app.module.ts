@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GitService } from './git.service';
 import { BranchsComponent } from './branchs/branchs.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { HomenavbarComponent } from './homenavbar/homenavbar.component';
 import { CommitComponent } from './commit/commit.component';
 import { BranchsCommitsComponent } from './branchscommits/branchscommits.component';
