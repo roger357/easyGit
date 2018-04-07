@@ -17,6 +17,11 @@ export class GitService {
     return this.http.get<Branch[]>(this.BASE_URL + 'toplist/');
   }
 
+  getBranchByNameTerm(searchTerm: string): Observable<Branch[]> {
+    const url = `${this.BASE_URL}branchs?searchTerm=${searchTerm}`
+    return this.http.get<Branch[]>(url);
+  }
+
   getAllBranchs(): Observable<Branch[]> {
     return this.http.get<Branch[]>(this.BASE_URL + 'allbranchs/');
   }

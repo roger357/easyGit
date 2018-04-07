@@ -33,6 +33,13 @@ export class BranchsCommitsComponent implements OnInit {
     private gitService: GitService,
     private location: Location
   ) { 
+    // refrescar ruta
+    route.params.subscribe(val => {
+      this.branchName = this.route.snapshot.paramMap.get('name'); 
+      this.commitsToShow = [];
+      this.commits = [];
+      this.getCommitsCount();  
+    });
     this.maxPagesView = 18;
     this.itemPerPage = 10;
     this.pageNumber = 1;

@@ -47,6 +47,23 @@ def list_all_branchs():
     return jsonify(branchs_list)
 
 
+@app.route('/commitviewer/branchs')
+def get_branch_by_name():
+    search_term = request.args.get('searchTerm')
+    branchs_list = []
+    # Este condicional evita que realice busquedas con estring vacios.
+    if search_term:
+        for branch in repo.references:
+            try:
+                if branch.tracking_branch() is None:
+                    if search_term in branch.remote_head:
+                        branchs_list.append({
+                            'branchName': branch.remote_head,
+                            'lastCommit': branch.commit.hexsha})
+            except AttributeError:
+                app.logger.info('No se procesa el branch ' + str(branch))
+    return jsonify(branchs_list)
+
 @app.route('/commitviewer/toplist/')
 def list_top_branchs():
     branchs = get_top_branchs()

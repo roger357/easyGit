@@ -26,8 +26,26 @@
         <a class="nav-link" routerLink="/branchs">All Branchs</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search Branch" aria-label="Search">
+    <form class="form-group row">
+      <div class="col-sm-10">
+      <input #searchBox class="form-control searchFix" type="search" placeholder="Search Branch" aria-label="Search" (keyup)="search(searchBox.value)" >
+      
+      <div id="listaFix">
+        <ul class="search-result">
+          <li *ngFor="let branch of branchs$ | async" >
+            <div id="branch">
+            <a routerLink="/detail/{{branch.branchName}}">
+              {{branch.branchName}}
+            </a>
+          </div>
+          </li>
+        </ul>
+      </div>
+
+      </div>
     </form>
   </div>
 </nav>
+
+
+
