@@ -5,6 +5,7 @@ from collections import OrderedDict
 from flask.ext.jsonpify import jsonify
 from git import Repo
 from modificationtype import DiffType
+from searchtype import SearchType
 from line import LineRailCreator
 import re
 import datetime
@@ -87,10 +88,19 @@ def list_branch_commits():
     """
     branch_name = request.args.get('branchName')
     commits = request.args.get('commits')
+    searchBy = request.args.get('searchBy')
+    searchParam = request.args.get('searchParam')
     commitlist = []
     git_pull()
     branch = 'origin/{0}'.format(branch_name)
     for commit in repo.iter_commits(branch, max_count=commits):
+        if searchBy :
+            if int(searchBy) == SearchType.AUTHOR.value and commit.author.name.upper() != searchParam.upper():
+                continue
+            elif int(searchBy) == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
+                continue
+            elif int(searchBy) == SearchType.SHA.value and searchParam.upper() != commit.hexsha.upper():
+                continue
         commitlist.append(get_commit_details(commit))
 
     # result = {'Branch': branch_name, 'Commits': commitlist}
@@ -197,6 +207,8 @@ def get_commits_per_page():
     page = int(request.args.get('page'))
     itemPerPage = int(request.args.get('itemPerPage'))
     maxPagesView = int(request.args.get('maxPagesView'))
+    searchBy = int(request.args.get('searchBy'))
+    searchParam = request.args.get('searchParam')
     commitlist = []
     git_pull()
     commitsquantity = itemPerPage * maxPagesView
@@ -206,6 +218,13 @@ def get_commits_per_page():
         infLimit = ((itemPerPage * page) - itemPerPage) + 1
     branch = 'origin/{0}'.format(branch_name)
     for commit in list(repo.iter_commits(branch))[infLimit: infLimit + (commitsquantity)]:
+        if searchBy :
+            if searchBy == SearchType.AUTHOR.value and commit.author.name.upper() != searchParam.upper():
+                continue
+            elif searchBy == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
+                continue
+            elif searchBy == SearchType.SHA.value and searchParam.upper() != commit.hexsha.upper():
+                pass
         commitlist.append(get_commit_details(commit))
     print(infLimit)
     print(infLimit + (commitsquantity))

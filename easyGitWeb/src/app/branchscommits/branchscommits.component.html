@@ -1,4 +1,78 @@
-<h3>{{branchName}}</h3>
+<div class="row">
+  <div class="col-3">
+      <h3>{{branchName}}</h3>
+  </div>
+  
+<div class="col-9">
+  <div class="float-right">
+    <button type="button" class="btn btn-primary" 
+    data-toggle="collapse" data-target="#multiCollapseExample1" 
+    aria-expanded="false" aria-controls="multiCollapseExample1"
+    (click)="pivotTables()">
+    <i class="fa fa-filter" aria-hidden="true"></i>
+    filter
+    </button>
+  </div>
+</div>
+</div>
+
+<div class="collapse multi-collapse" id="multiCollapseExample1">
+  <div class="card card-body" id="multiCollapseExample1">
+  <div class="row">
+    <div class="col-4">
+
+      <select #filterSelect class="custom-select" (change)="setSelectedFilter(filterSelect.value)">
+        <option selected value="0">Search By</option>
+        <option value="1">Date</option>
+        <option value="2">Author</option>
+        <option value="3">Message</option>
+        <option value="4">sha</option>
+      </select>
+
+    </div>
+    <div class="col-8">
+
+    </div>
+
+  </div>
+  <br>
+  <div class="row">
+    <div class="col" [ngSwitch]="selectedFilter">
+      <div *ngSwitchCase="1">Seleccionaste Date</div>
+
+      <div *ngSwitchCase="2">
+        <div class="input-group">
+          <input #authorText type="text" class="form-control" aria-label="Author">
+          <div class="input-group-append">
+            <button (click)="searchCriteria(authorText.value)" class="btn btn-outline-primary" type="button">Search</button>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngSwitchCase="3">
+        <textarea #messageText class="form-control"></textarea>
+        <div class="float-right">
+          <br>
+          <button (click)="searchCriteria(messageText.value)" type="button" class="btn btn-outline-primary">Search</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="4">
+        <div class="input-group">
+          <input #shaText type="text" class="form-control" aria-label="sha">
+          <div class="input-group-append">
+            <button  (click)="searchCriteria(shaText.value)" class="btn btn-outline-primary" type="button">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchDefault>No se ha seleccionado un elemento valido</div>
+      
+    </div>
+  </div>
+  </div>
+</div>
+
 <br>
 <div *ngIf="commitsToShow?.length">
   <table class="table table-sm table-hover">

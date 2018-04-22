@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { GitService } from '../git.service'
 import { Commit } from '../entities/commit'
+import { and } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-branchscommits',
@@ -26,8 +27,15 @@ export class BranchsCommitsComponent implements OnInit {
   pages: number[] = [];
   commits: Commit[] = [];
   commitsToShow: Commit[] = [];
+  commitsPivotArray: Commit[] = [];
   commit: Commit;
+  commitsSearch: Commit[] = [];
 
+  selectedFilter: number;
+  searchParam: string;
+
+  switchedTables: boolean;
+  
   constructor(
     private route: ActivatedRoute,
     private gitService: GitService,
@@ -35,44 +43,57 @@ export class BranchsCommitsComponent implements OnInit {
   ) { 
     // refrescar ruta
     route.params.subscribe(val => {
-      this.branchName = this.route.snapshot.paramMap.get('name'); 
-      this.commitsToShow = [];
-      this.commits = [];
-      this.getCommitsCount();  
+      const branch = this.route.snapshot.paramMap.get('name');
+      if (branch != this.branchName && this.branchName != null){
+        this.branchName = this.route.snapshot.paramMap.get('name');
+        this.commitsToShow = [];
+        this.commits = [];
+        this.switchedTables = false;
+        this.searchParam = "";
+        this.getBranchCommits(0); 
+      } 
     });
     this.maxPagesView = 18;
     this.itemPerPage = 10;
     this.pageNumber = 1;
+    this.selectedFilter = 0;
+    this.switchedTables = false;
   }
 
   ngOnInit() {
     this.branchName = this.route.snapshot.paramMap.get('name'); 
-    this.getCommitsCount();    
+    this.getBranchCommits(0);    
   }
 
-  getCommitsCount(): void {
-    this.gitService.getCommitsCount(this.branchName)
-    .subscribe(commitsCount => this.commitsCount = commitsCount,
-      (err) => console.log('Error in BranchsCommitsComponent#getCommitsCount()'),
-      () => this.getBranchCommits());
-  }
-
-  getBranchCommits(): void {
-    this.gitService.getBranchCommits(this.branchName, (this.maxPagesView * this.itemPerPage))
-    .subscribe(commits => this.commits = commits,
+  getBranchCommits(searchType: number): void {
+    this.gitService.getBranchCommits(this.branchName, (this.maxPagesView * this.itemPerPage), searchType, this.searchParam)
+    .subscribe(commits => {
+      if( !this.switchedTables ){
+        this.commits = commits
+      }else{
+        this.commitsSearch = commits
+      }      
+    },
       (err) => console.log('Error in BranchsCommitsComponent#getBranchCommits()'),
       () => this.calculatePageInitial());
   }
 
   calculatePageInitial(): void {
-    console.log(this.commitsCount);
-    this.totalPages = Math.ceil(this.commitsCount / this.itemPerPage);
+    if(this.switchedTables) {
+      this.commitsToShow = [];
+      this.commitsPivotArray = this.commitsSearch;
+    }else{
+      this.commitsToShow = [];
+      this.commitsPivotArray = this.commits;
+    }
+    this.totalPages = Math.ceil(this.commitsPivotArray.length / this.itemPerPage);
+    console.log('switch='+this.switchedTables+ ' Total pages= '+this.totalPages);
     this.calculatePages(1);
 
   }
 
   calculatePages(initialPage: number): void {
-    console.log('Calculando paginas...')
+    console.log('Calculando paginas...');
     this.pages = [];
     for( let i = initialPage; this.pages.length < this.maxPagesView && i<= this.totalPages; i++ ){
       this.pages.push(i);
@@ -82,27 +103,27 @@ export class BranchsCommitsComponent implements OnInit {
     }else{
       this.maxPagesView = this.totalPages;
     }
-    this.commitsToShow = this.commits.slice(0, this.itemPerPage);
+    this.commitsToShow = this.commitsPivotArray.slice(0, this.itemPerPage);
     this.pageNumber = this.pages[0];
     console.log(this.commitsToShow.length);
   }
 
   refreshCommitsToShow(): void {
     console.log('Refrescando lista de Commits...')
-    let commitLength: number = this.commits.length;
+    let commitLength: number = this.commitsPivotArray.length;
     let infLim: number = 0;
     let supLim: number = this.pageArrayPsotion * this.itemPerPage;
     console.log('commitLength ' + commitLength);
     console.log('supLim ' + supLim);
-    console.log('commits ' + this.commits.length);
+    console.log('commits ' + this.commitsPivotArray.length);
     if(this.pageArrayPsotion > 1){
       infLim = supLim - this.itemPerPage;
     }
     console.log('infLim ' + infLim);
     if(supLim < commitLength){
-       this.commitsToShow = this.commits.slice(infLim, supLim);
+       this.commitsToShow = this.commitsPivotArray.slice(infLim, supLim);
     }else {
-      this.commitsToShow = this.commits.slice(infLim, commitLength);
+      this.commitsToShow = this.commitsPivotArray.slice(infLim, commitLength);
     }   
   }
 
@@ -143,8 +164,14 @@ export class BranchsCommitsComponent implements OnInit {
   }
 
   getNextOrPreviousCommitGroup(pageNumber: number): void {
-    this.gitService.getCommitsPage(this.branchName, pageNumber, this.itemPerPage, this.maxPagesView)
-    .subscribe(commits => this.commits = commits,
+    this.gitService.getCommitsPage(this.branchName, pageNumber, this.itemPerPage, this.maxPagesView, this.selectedFilter, this.searchParam)
+    .subscribe(commits => {
+      if( !this.switchedTables ){
+        this.commits = commits
+      }else{
+        this.commitsSearch = commits
+      }      
+    },
       (err) => console.log('Error in BranchsCommitsComponent#getNextOrPreviousCommitGroup()'),
       () => this.calculatePages(pageNumber));
   }  
@@ -155,6 +182,35 @@ export class BranchsCommitsComponent implements OnInit {
 
   loadCommit(commit: Commit): void {
     this.commit = commit;
+  }
+
+  setSelectedFilter(filter: number): void{
+    this.selectedFilter = filter;
+  }
+
+  pivotTables(): void {
+    if(this.switchedTables) {
+      this.commitsPivotArray = this.commits;
+      this.switchedTables = false;
+      this.maxPagesView = 18;
+      if(this.commitsSearch.length > 0){
+        this.calculatePageInitial();
+      }
+      console.log("false");
+    }else{
+      this.commitsPivotArray = this.commitsSearch;
+      this.switchedTables = true;
+      console.log("true");
+      if(this.commitsSearch.length > 0){
+        this.calculatePageInitial();
+      }
+    }
+  }
+
+  searchCriteria(param: string): void {
+    this.commitsToShow = [];
+    this.searchParam = param;
+    this.getBranchCommits(this.selectedFilter); 
   }
 
 }

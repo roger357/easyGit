@@ -45,14 +45,14 @@ export class GitService {
     return this.http.get<any>(url);
   }
 
-  getBranchCommits(name: string, commits: number = 30): Observable<Commit[]> {
-    const url = `${this.BASE_URL}branch/commits?branchName=${name}&commits=${commits}`
+  getBranchCommits(name: string, commits: number = 30, searchType: number = 0, searchParam: string): Observable<Commit[]> {
+    const url = `${this.BASE_URL}branch/commits?branchName=${name}&commits=${commits}&searchBy=${searchType}&searchParam=${searchParam}`
     return this.http.get<Commit[]>(url);
   }
 
-  getCommitsPage(branchName: string, page: number, itemPerPage: number, maxPagesView: number): Observable<Commit[]> {
+  getCommitsPage(branchName: string, page: number, itemPerPage: number, maxPagesView: number, searchType: number = 0, searchParam: string): Observable<Commit[]> {
     const url = `${this.BASE_URL}branch/commitsperpage?branchName=${branchName}&page=${page}&
-    itemPerPage=${itemPerPage}&maxPagesView=${maxPagesView}`
+    itemPerPage=${itemPerPage}&maxPagesView=${maxPagesView}&searchBy=${searchType}&searchParam=${searchParam}`
     return this.http.get<Commit[]>(url);
   }
 
