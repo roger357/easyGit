@@ -95,7 +95,7 @@ def list_branch_commits():
     branch = 'origin/{0}'.format(branch_name)
     for commit in repo.iter_commits(branch, max_count=commits):
         if searchBy :
-            if int(searchBy) == SearchType.AUTHOR.value and commit.author.name.upper() != searchParam.upper():
+            if int(searchBy) == SearchType.AUTHOR.value and searchParam.upper() not in commit.author.name.upper():
                 continue
             elif int(searchBy) == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
                 continue
@@ -219,7 +219,7 @@ def get_commits_per_page():
     branch = 'origin/{0}'.format(branch_name)
     for commit in list(repo.iter_commits(branch))[infLimit: infLimit + (commitsquantity)]:
         if searchBy :
-            if searchBy == SearchType.AUTHOR.value and commit.author.name.upper() != searchParam.upper():
+            if searchBy == SearchType.AUTHOR.value and searchParam.upper() not in commit.author.name.upper():
                 continue
             elif searchBy == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
                 continue
