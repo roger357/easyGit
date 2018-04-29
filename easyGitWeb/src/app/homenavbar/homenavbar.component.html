@@ -32,13 +32,15 @@
       
       <div id="listaFix">
         <ul class="search-result">
-          <li *ngFor="let branch of branchs$ | async" >
             <div id="branch">
+          <li *ngFor="let branch of branchs$ | async" >
+            
             <a routerLink="/detail/{{branch.branchName}}">
               {{branch.branchName}}
             </a>
-          </div>
+          
           </li>
+        </div>
         </ul>
       </div>
 
