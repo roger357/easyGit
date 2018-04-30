@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { GitService } from '../git.service'
 import { Commit } from '../entities/commit'
 import { and } from '@angular/router/src/utils/collection';
+import { empty } from 'rxjs/Observer';
 
 @Component({
   selector: 'app-branchscommits',
@@ -35,6 +36,14 @@ export class BranchsCommitsComponent implements OnInit {
   searchParam: string;
 
   switchedTables: boolean;
+
+  years: number[] = [];
+  months: number[] = [];
+  days: number[] = [];
+  leap: boolean;
+
+  disableFilter: boolean;
+  emptyFlag: boolean;
   
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +67,7 @@ export class BranchsCommitsComponent implements OnInit {
     this.pageNumber = 1;
     this.selectedFilter = 0;
     this.switchedTables = false;
+    this.disableFilter = true;
   }
 
   ngOnInit() {
@@ -68,14 +78,29 @@ export class BranchsCommitsComponent implements OnInit {
   getBranchCommits(searchType: number): void {
     this.gitService.getBranchCommits(this.branchName, (this.maxPagesView * this.itemPerPage), searchType, this.searchParam)
     .subscribe(commits => {
-      if( !this.switchedTables ){
-        this.commits = commits
+      if(commits.length == 0) {
+        this.emptyFlag = true;
       }else{
-        this.commitsSearch = commits
-      }      
+        if( !this.switchedTables ){
+          this.commits = commits;
+        }else{
+          this.commitsSearch = commits;
+        } 
+      }           
     },
       (err) => console.log('Error in BranchsCommitsComponent#getBranchCommits()'),
-      () => this.calculatePageInitial());
+      () => {
+        if( this.emptyFlag) {
+          this.emptyFlag = false;
+          if( !this.switchedTables ){
+            this.commitsToShow = this.commits;
+          }else{
+            this.commitsToShow = this.commitsSearch;
+          } 
+        }else {
+          this.calculatePageInitial();
+        }        
+      });
   }
 
   calculatePageInitial(): void {
@@ -89,7 +114,7 @@ export class BranchsCommitsComponent implements OnInit {
     this.totalPages = Math.ceil(this.commitsPivotArray.length / this.itemPerPage);
     console.log('switch='+this.switchedTables+ ' Total pages= '+this.totalPages);
     this.calculatePages(1);
-
+    this.disableFilter = false;
   }
 
   calculatePages(initialPage: number): void {
@@ -208,9 +233,18 @@ export class BranchsCommitsComponent implements OnInit {
   }
 
   searchCriteria(param: string): void {
-    this.commitsToShow = [];
-    this.searchParam = param;
-    this.getBranchCommits(this.selectedFilter); 
+    if(this.selectedFilter == 1) {
+      let dates = param.split('*');
+      if(dates[0] && dates[1]) {
+        this.commitsToShow = [];
+        this.searchParam = param;
+        this.getBranchCommits(this.selectedFilter); 
+      }
+    }else {
+      this.commitsToShow = [];
+      this.searchParam = param;
+      this.getBranchCommits(this.selectedFilter); 
+    }
   }
-
+  
 }

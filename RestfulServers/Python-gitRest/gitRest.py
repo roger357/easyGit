@@ -9,6 +9,7 @@ from searchtype import SearchType
 from line import LineRailCreator
 import re
 import datetime
+from datetime import datetime
 import logging
 
 # WebService Intance
@@ -95,12 +96,23 @@ def list_branch_commits():
     branch = 'origin/{0}'.format(branch_name)
     for commit in repo.iter_commits(branch, max_count=commits):
         if searchBy :
-            if int(searchBy) == SearchType.AUTHOR.value and searchParam.upper() not in commit.author.name.upper():
+            search = int(searchBy)
+            if search == SearchType.AUTHOR.value and searchParam.upper() not in commit.author.name.upper():
                 continue
-            elif int(searchBy) == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
+            elif search == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
                 continue
-            elif int(searchBy) == SearchType.SHA.value and searchParam.upper() != commit.hexsha.upper():
+            elif search == SearchType.SHA.value and searchParam.upper() != commit.hexsha.upper():
                 continue
+            elif search == SearchType.DATE.value:
+                commit_time = commit.committed_datetime
+                commit_date = '{0:04d}-{1:02d}-{2:02d}'.format(commit_time.year, commit_time.month,commit_time.day)
+                dates = searchParam.split("*")
+                dateFrom = datetime.strptime(dates[0], '%Y-%m-%d')
+                dateTo = datetime.strptime(dates[1], '%Y-%m-%d')
+                dateCommit = datetime.strptime(commit_date, '%Y-%m-%d')
+                if not (dateFrom <= dateCommit <= dateTo):
+                    continue
+
         commitlist.append(get_commit_details(commit))
 
     # result = {'Branch': branch_name, 'Commits': commitlist}
@@ -224,7 +236,15 @@ def get_commits_per_page():
             elif searchBy == SearchType.MESSAGE.value and searchParam.upper() not in commit.message.upper():
                 continue
             elif searchBy == SearchType.SHA.value and searchParam.upper() != commit.hexsha.upper():
-                pass
+                continue
+            elif searchBy == SearchType.DATE.value:
+                commit_time = commit.committed_datetime
+                commit_date = '{0:04d}-{1:02d}-{2:02d}'.format(commit_time.year, commit_time.month,commit_time.day)
+                dates = searchParam.split(str="*")
+                dateFrom = datetime.date.strptime(dates[0], '%Y-%m-%d')
+                dateTo = datetime.date.strptime(dates[1], '%Y-%m-%d')
+                if not (dateFrom < commit_date < dateTo):
+                    continue
         commitlist.append(get_commit_details(commit))
     print(infLimit)
     print(infLimit + (commitsquantity))
