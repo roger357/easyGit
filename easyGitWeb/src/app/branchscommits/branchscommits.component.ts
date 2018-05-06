@@ -62,6 +62,7 @@ export class BranchsCommitsComponent implements OnInit {
         this.getBranchCommits(0); 
       } 
     });
+    this.pageArrayPsotion = 1;
     this.maxPagesView = 18;
     this.itemPerPage = 10;
     this.pageNumber = 1;
@@ -81,6 +82,7 @@ export class BranchsCommitsComponent implements OnInit {
       if(commits.length == 0) {
         this.emptyFlag = true;
       }else{
+        this.emptyFlag = false;
         if( !this.switchedTables ){
           this.commits = commits;
         }else{
@@ -91,7 +93,7 @@ export class BranchsCommitsComponent implements OnInit {
       (err) => console.log('Error in BranchsCommitsComponent#getBranchCommits()'),
       () => {
         if( this.emptyFlag) {
-          this.emptyFlag = false;
+          //this.emptyFlag = false;
           if( !this.switchedTables ){
             this.commitsToShow = this.commits;
           }else{
@@ -218,21 +220,25 @@ export class BranchsCommitsComponent implements OnInit {
       this.commitsPivotArray = this.commits;
       this.switchedTables = false;
       this.maxPagesView = 18;
-      if(this.commitsSearch.length > 0){
+      //if(this.commitsSearch.length > 0){
         this.calculatePageInitial();
-      }
+      //}
       console.log("false");
     }else{
+      if(this.commitsSearch.length == 0){
+        this.emptyFlag = true;
+      }
       this.commitsPivotArray = this.commitsSearch;
       this.switchedTables = true;
       console.log("true");
-      if(this.commitsSearch.length > 0){
+      //if(this.commitsSearch.length > 0){
         this.calculatePageInitial();
-      }
+      //}
     }
   }
 
   searchCriteria(param: string): void {
+    this.emptyFlag = false;
     if(this.selectedFilter == 1) {
       let dates = param.split('*');
       if(dates[0] && dates[1]) {
@@ -241,8 +247,10 @@ export class BranchsCommitsComponent implements OnInit {
         this.getBranchCommits(this.selectedFilter); 
       }
     }else {
+      this.commitsSearch = [];
       this.commitsToShow = [];
       this.searchParam = param;
+      this.maxPagesView = 18;
       this.getBranchCommits(this.selectedFilter); 
     }
   }

@@ -79,7 +79,7 @@
 </div>
 
 <br>
-<div *ngIf="commitsToShow?.length">
+<div *ngIf="commitsToShow?.length || emptyFlag">
   <table class="table table-sm table-hover">
     <thead class="thead-dark">
       <tr>
@@ -98,6 +98,10 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div *ngIf="!commitsToShow?.length && emptyFlag" class="alert alert-warning" role="alert">
+  Commits not Found
 </div>
 
 
@@ -167,7 +171,7 @@
 
 
 
-<div *ngIf="!commitsToShow?.length">
+<div *ngIf="!commitsToShow?.length && !emptyFlag">
 <div class="progress">
   <div class="indeterminate"></div>
 </div>
