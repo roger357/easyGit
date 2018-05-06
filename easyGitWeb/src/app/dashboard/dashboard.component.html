@@ -44,7 +44,7 @@
       </div>
       <div *ngIf="commit">
         <div class="modal-body">
-          <label for="exampleInputEmail1" class="bmd-label-static text-customgreen" id="roger">sha</label>
+          <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">sha</label>
           <p class="font-weight-normal">{{commit.sha8}}</p>
           <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Date</label>
           <p class="font-weight-normal">{{commit.commitDate}}</p>
@@ -54,7 +54,7 @@
           <p class="font-weight-normal" [innerHTML]="commit.message"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <a routerLink="/commit/{{commit.sha}}" data-dismiss="modal">
             <button type="button" class="btn btn-primary">Show More</button>
           </a>

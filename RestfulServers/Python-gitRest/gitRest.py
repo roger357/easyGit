@@ -8,8 +8,7 @@ from modificationtype import DiffType
 from searchtype import SearchType
 from line import LineRailCreator
 import re
-import datetime
-from datetime import datetime
+from datetime import *
 import logging
 
 # WebService Intance
@@ -243,7 +242,7 @@ def get_commits_per_page():
                 dates = searchParam.split(str="*")
                 dateFrom = datetime.date.strptime(dates[0], '%Y-%m-%d')
                 dateTo = datetime.date.strptime(dates[1], '%Y-%m-%d')
-                if not (dateFrom < commit_date < dateTo):
+                if not (dateFrom <= commit_date <= dateTo):
                     continue
         commitlist.append(get_commit_details(commit))
     print(infLimit)
@@ -315,7 +314,7 @@ def get_commit_details(commit, short_message=True):
 
 def get_top_branchs():
     git_pull()
-    today = datetime.date.today()  # - datetime.timedelta(days=2)
+    today = date.today()  # - datetime.timedelta(days=200) Ultimos 200 dias
     branchs = {}
     for branch in repo.references:
         count = 0
@@ -323,7 +322,7 @@ def get_top_branchs():
             if branch.tracking_branch() is None:
                 branch_name = 'origin/{0}'.format(branch.remote_head)
                 for commit in repo.iter_commits(branch_name, max_count=100):
-                    if commit.committed_datetime.date() == today:
+                    if (today - timedelta(days=200)) <= commit.committed_datetime.date() <= today:
                         count += 1
                 if count > 0:
                     branchs[branch] = count
@@ -334,7 +333,7 @@ def get_top_branchs():
 
 def get_all_branchs():
     git_pull()
-    today = datetime.date.today()  # - datetime.timedelta(days=2)
+    today = date.today()  # - datetime.timedelta(days=2)
     branchs = {}
     for branch in repo.references:
         count = 0

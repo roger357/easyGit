@@ -18,7 +18,7 @@
 </div>
 
 
-<div *ngIf="branchsToShow?.length">
+<div *ngIf="branchsToShow?.length && branchsToShow?.length > 5">
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item page-link-fixed"><a class="page-link" (click)="paginationBackward()">Previous</a></li>
@@ -51,9 +51,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div *ngIf="commit" class="modal-body">
+      <div *ngIf="commit">
 
-        <label for="exampleInputEmail1" class="bmd-label-static text-customgreen" id="roger">sha</label>
+      
+      <div  class="modal-body">
+
+        <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">sha</label>
         <p class="font-weight-normal">{{commit.sha8}}</p>
 
         <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Date</label>
@@ -64,10 +67,12 @@
 
         <label for="exampleInputEmail1" class="bmd-label-static text-customgreen">Commit Message</label>
         <p class="font-weight-normal" [innerHTML]="commit.message"></p>
-      
+      </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          <a routerLink="/commit/{{commit.sha}}" data-dismiss="modal"><button type="button" class="btn btn-primary">Show More</button></a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a routerLink="/commit/{{commit.sha}}" data-dismiss="modal">
+            <button type="button" class="btn btn-primary">Show More</button>
+          </a>
           <a routerLink="/commit/{{commit.sha}}" target="_blank">
             <i class="fa fa-external-link" aria-hidden="true"></i>
           </a>
