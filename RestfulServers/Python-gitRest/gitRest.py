@@ -322,7 +322,7 @@ def get_top_branchs():
             if branch.tracking_branch() is None:
                 branch_name = 'origin/{0}'.format(branch.remote_head)
                 for commit in repo.iter_commits(branch_name, max_count=100):
-                    if (today - timedelta(days=200)) <= commit.committed_datetime.date() <= today:
+                    if (today - timedelta(days=30)) <= commit.committed_datetime.date() <= today:
                         count += 1
                 if count > 0:
                     branchs[branch] = count
