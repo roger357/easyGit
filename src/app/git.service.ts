@@ -9,7 +9,7 @@ import { CommittedFile } from './entities/committedfile';
 @Injectable()
 export class GitService {
 
-  private BASE_URL = 'http://roger357.pythonanywhere.com/commitviewer/';
+  private BASE_URL = 'https://roger357.pythonanywhere.com/commitviewer/';
 
   constructor(public http: HttpClient) { }
 
