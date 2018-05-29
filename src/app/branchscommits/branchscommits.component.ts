@@ -163,6 +163,7 @@ export class BranchsCommitsComponent implements OnInit {
   paginationBackward(): void {
     if(this.pageNumber > 1){
       this.pageNumber = this.pageNumber - 1;
+      this.pageArrayPsotion -= 1;
       this.refreshCommitsToShow();
     } 
   }
@@ -170,6 +171,7 @@ export class BranchsCommitsComponent implements OnInit {
   paginationForward(): void {
     if(this.pageNumber < this.maxPagesView){
       this.pageNumber = this.pageNumber + 1;
+      this.pageArrayPsotion += 1;
       this.refreshCommitsToShow();
     } 
   }
@@ -238,15 +240,17 @@ export class BranchsCommitsComponent implements OnInit {
   }
 
   searchCriteria(param: string): void {
-    this.emptyFlag = false;
+    
     if(this.selectedFilter == 1) {
       let dates = param.split('*');
-      if(dates[0] && dates[1]) {
+      if( (dates[0] && dates[1])  ) {
+        this.emptyFlag = false;
         this.commitsToShow = [];
         this.searchParam = param;
         this.getBranchCommits(this.selectedFilter); 
       }
     }else {
+      this.emptyFlag = false;
       this.commitsSearch = [];
       this.commitsToShow = [];
       this.searchParam = param;
