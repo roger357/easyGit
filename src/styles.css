@@ -22,6 +22,11 @@ header, main, footer, .nav-wrapper {
 
 body { background: #EEEEEE !important; }
 
+.table .thead-dark th {
+  background-color: #009688 !important;;
+  border-color: #009688 !important;;
+}
+
 /* INFINITE Progress Bar*/
 .progress {
   position: relative;
