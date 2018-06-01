@@ -247,6 +247,7 @@ export class BranchsCommitsComponent implements OnInit {
         this.emptyFlag = false;
         this.commitsToShow = [];
         this.searchParam = param;
+        this.maxPagesView = 18;
         this.getBranchCommits(this.selectedFilter); 
       }
     }else {
